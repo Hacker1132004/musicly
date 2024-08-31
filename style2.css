@@ -1,0 +1,162 @@
+*{
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+html,body{
+    width : 100%;
+    height: 100%;
+}
+#main{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+#body{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+#left{
+    width: 50%;
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    align-items: center;
+    padding: 3%;
+}
+#ltop{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    line-height: 3;
+    padding: 0% 0 10% 10%;
+
+}
+#lmid{
+    width: 80%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+#lbtm{
+    width: 80%;
+    padding: 10% 0% 10% 10%;
+    display: flex;
+    flex-direction: column;
+    line-height: 2;
+}
+label{
+    font-size: 17px;
+    display: flex;
+}
+input{
+    height: 38px;
+    width: 100%;
+    padding: 3%;
+    border: 1px solid #eee;
+}
+form>a{
+    color: #4B43E2;
+    text-decoration: none;
+    float: right;
+    font-size: 13px;
+}
+form>button{
+    width: 100%;
+    height: 38px;
+    background-color: #4B43E2;
+    border: 0px solid black;
+    color: #fff;
+    font-size: 15px;
+}
+#lbtm>p{
+    font-size: 15px;
+    padding-top: 5%;
+}
+#right{
+    width: 50%;
+    position: absolute;
+    height: 100%;
+    background-color: #4B43E2;
+    right: 0%;
+    top: 0%;
+    padding: 7%;
+}
+#rthead{
+    width: 100%;
+    height: 80%;
+    position: relative;
+    
+}
+#caption{
+    padding-top: 8%;
+}
+#rthead>#caption h1{
+    font-size: 70px;
+    color: #fff;
+}
+#nav{
+    border-radius: 50px;
+    width: 28%;
+    height: 6%;
+    display: flex;
+    border: 0 solid black;
+    background-color: #625BE3;
+
+}
+#rthead>#nav>button:nth-child(1){
+    background-color: #fff;
+    border: 0px solid white;
+    border-radius: 50px;
+    /* height: 50%; */
+    margin: 0 5% 0 5%;
+    width: 36%;
+    height: 80%;
+    margin-top: 3%;
+    font-size: 11px;
+    font-weight: 500;
+    color: #625BE3;
+    text-transform: uppercase;
+    /* padding: 10% 10% 10% 10%; */
+}
+#rthead>#nav>button:nth-child(2){
+    background-color: #625BE3;
+    border: 0px solid white;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: capitalize;
+    white-space: 5;
+}
+#rbtm{
+    height: 20%;
+}
+#rbtm>#testimonial>#text>p{
+    color: #bbb;
+    width: 70%;
+    padding-bottom: 10%;
+    line-height: 2;
+}
+#rbtm>#testimonial>#profile{
+    display: flex;
+}
+#rbtm>#testimonial>#profile>#details{
+    color: #bbb;
+}
+#rbtm>#testimonial>#profile>#img{
+    border-radius: 100%;
+    /* object-fit: cover; */
+    height: 50px;
+    width: 50px;
+    padding-right: 15%;
+    /* overflow: hidden; */
+}
+#rbtm>#testimonial>#profile>#img>img{
+    border-radius: 100%;
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
+}

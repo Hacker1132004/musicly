@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicly</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="main">
+        <div id="navigation">
+            <div id="nav">
+                <button>Music</button>
+                <button>Podcast</button>
+                <button>Live</button>
+                <input placeholder="Search Here" name="search" id="search"/>
+                <button id="search-button">Search</button>
+            </div>
+           
+            <div id="nav-2">
+                <button id="notification">
+                    <i class="glyphicon glyphicon-bell" style="font-size:30px;"></i>
+                </button>
+            </div>
+        </div>
+        <aside id="sidebar">
+            <div id="logo">
+                <h1>Musicly</h1>
+            </div>
+            <button class="button">Home</button>
+            <button class="button">Button</button>
+            <button class="button">Button</button>
+            <button class="button">Button</button>
+            <button class="button">Button</button>
+        </aside>
+        <div id="header">
+            <div id="banner-container">
+                <div id="songlist-cont">
+                    <div id="song-list"><h1>song-list</h1></div>
+                </div>
+            </div>
+        </div>
+        <div id="artist-album">
+            <div id="title">
+                <h1>Top-Artist</h1>
+            </div>
+            <div id="artist-profile">
+                <div onclick="getSongsByArtist('Arijit Singh')" class="artist">
+                    <img src="arijit.png" alt="">
+                </div>
+                <div class="artist-name-overlay">
+                    <span>Arijit Singh</span>
+                </div>
+                <div onclick="getSongsByArtist('Swaroop Khan')" class="artist">
+                    <img src="Swaroop_khan.png" alt="">
+                </div>
+                <div class="artist-name">
+                    <h1 class="name">Swaroop Khan</h1>
+                </div>
+                <div onclick="getSongsByArtist('Dhanda Nyoliwala')" class="artist">
+                    <img src="Dhanda.png" alt="">
+                </div>
+                <div class="artist-name">
+                    <h1 class="name">Dhanda Nyoliwala</h1>
+                </div>
+                <div onclick="getSongsByArtist('Kam Lohgarh')" class="artist">
+                    <img src="Kam_Lohgarh.png" alt="">
+                </div>
+                <div class="artist-name">
+                    <h1 class="name">Kam Lohgarh</h1>
+                </div>
+                <div onclick="getSongsByArtist('Yo Yo Honey Singh')" class="artist">
+                    <img src="Honey.png" alt="">
+                </div>
+                <div class="artist-name">
+                    <h1 class="name">Yo Yo Honey Singh</h1>
+                </div>
+                <div onclick="getSongsByArtist('Karan Aujla')" class="artist">
+                    <img src="Karan.png" alt="">
+                </div>
+                <div class="artist-name">
+                    <h1 class="name">Karan Aujla</h1>
+                </div>
+            </div>
+            <div id="artist-list"></div>
+        </div>
+        <div id="player">
+            <!-- <div id="youtube-player"></div> -->
+            <div id="title">
+                <h1>{Song Name}</h1>
+            </div>
+            <button id="prev">Prev</button>
+            <button id="play-pause">Play</button>
+            <button id="next">Next</button>
+            <div id="progress-bar">0:00<input id="seek-bar" type="range">0:00</div>
+            <button id="minimize-maximize">Minimize</button>
+        </div>
+        
+    </div>
+
+   <script src="script.js"></script>
+
+</body>
+</html>
