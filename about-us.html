@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musicly</title>
+    <title>About-us | Musicly</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="android-chrome-512x512.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
@@ -13,17 +13,18 @@
 
     <div id="main">
         <div id="navigation" class=".navigation">
-            <div id="logo" class="logo-resp visible">
-                <h1 >Musicly</h1>
-            </div>
-            <div id="nav">
+            <!-- <div id="nav">
                 <button>Music</button>
                 <button>Podcast</button>
                 <button>Live</button>
                 <input placeholder="Search Here" name="search" id="search"/>
                 <button id="search-button">Search</button>
+            </div> -->
+            <div id="nav">
+                <div id="logo" class="logo-resp visible">
+                    <h1 >Musicly</h1>
+                </div>
             </div>
-            
             <div id="nav-2">
                 <div class="menudropdown ">
                     <a id="menu-btn-container" onclick="toggleMenuDropdown()" class="menudropdown-button hidden">
@@ -61,14 +62,9 @@
             </div>
         </aside>
         <div id="header">
-                <div id="songlist-cont">
-                    <div id="song-list"><h1>song-list</h1></div>
-                </div>
-                <div id="artistlist-cont" class="hidden">
-                    <div id="artist-list" ><h1>Artist-Name</h1></div>
-                </div>
+                
         </div>
-        <div id="artist-album">
+        <!-- <div id="artist-album">
             <div id="title">
                 <h1>Top-Artist</h1>
             </div>
@@ -107,7 +103,7 @@
         </div>
         <div id="maximize" class="hidden"><i class="ri-add-circle-fill"></i></div>
         <div id="player" class="hidden">
-            <!-- <div id="youtube-player"></div> -->
+            <div id="youtube-player"></div>
             <div id="title">
                 <span id="current-song-name">{Song Name}</span>
             </div>
@@ -116,7 +112,7 @@
             <i id="next" class="ri-skip-right-fill"></i>
             <div id="progress-bar">0:00<input id="seek-bar" type="range">0:00</div>
             <button id="minimize"><i class="ri-indeterminate-circle-fill"></i></button>
-        </div>
+        </div> -->
         
     </div>
 

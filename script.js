@@ -1,10 +1,13 @@
-alert("Welcome to Musicly");
 
 // Array of songs dynamically filled with data from Spotify
 let songs = [];
 let audioElement = new Audio();
 let currentSongIndex = 0;
 let isPlaying = false;
+let sidebar = document.querySelector('aside');
+let user = document.querySelector('#user');
+let menu = document.querySelector('#menu');
+
 
 // Spotify Client ID and Client Secret
 const clientId = 'c8d7db3837604b489b702345dc333213';
@@ -30,6 +33,17 @@ const getAccessToken = async () => {
         console.error('Error fetching access token:', error);
     }
 };
+
+const SongController = document.getElementById('player');
+let hidden = true;
+function toggle(){
+    if (hidden == true) {
+        SongController.classList.remove("hidden");
+        SongController.classList.add("visible");
+        hidden = false;
+        // SongController.style.width = "100%"; // Uncomment if needed
+    }
+}
 
 // Function to search for artists
 const searchArtists = async (artistName) => {
@@ -61,6 +75,7 @@ const displayArtists = (artists) => {
         artistDiv.textContent = artist.name;
         artistDiv.onclick = () => getTopTracksByArtist(artist.id); // Load songs when clicked
         artistListDiv.appendChild(artistDiv);
+
     });
 };
 
@@ -111,19 +126,75 @@ const displaySongs = () => {
     });
 };
 
+// Ensure this function is defined before calling it
+// function updateSongName(name) {
+//     const songNameElement = document.getElementById('songName');
+//     if (songNameElement) {
+//         songNameElement.textContent = name;
+//     } else {
+//         console.log('Song name element not found.');
+//     }
+// }
+
+// Example of using the function in your async operation
+const fetchAndUpdateSongName = async (songUrl) => {
+    try {
+        const response = await fetch(songUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const songName = await response.text(); // Assuming text response contains the song name
+        updateSongName(songName); // This call should work if the function is defined correctly
+    } catch (error) {
+        console.error('Error fetching song name:', error);
+    }
+};
+
+
+// document.getElementById('play-pause').addEventListener('click', async function() {
+//     const currentSongName = await getCurrentSongName(); // Await the result
+//     updateSongName(currentSongName);
+// });
+async function getCurrentSongName() {
+    try {
+        const response = await fetch('/api/current-song'); // Make sure this path is correct
+        if (!response.ok) throw new Error('Failed to fetch the current song');
+        const data = await response.json();
+        return data.songName;
+    } catch (error) {
+        console.error("Error fetching song name:", error);
+        return "Error fetching song name";
+    }
+}
+const updateSongName = (songName) => {
+    const songNameElement = document.getElementById('current-song-name');
+    if (songNameElement) {
+        songNameElement.textContent = songName;
+    }
+};
+
+
+
+
 // Function to play a song
 const playSong = (songUrl) => {
     if (audioElement.src !== songUrl) {
         audioElement.src = songUrl;
-        audioElement.load(); // Ensure the file is loaded
+        audioElement.load();
+        updatePlayPauseButton('ri-pause-circle-line'); // Update to pause icon
     }
+
+    // Attempt to play muted initially
+    audioElement.muted = true; // Set muted to bypass autoplay restrictions
     audioElement.play()
         .then(() => {
+            audioElement.muted = false; // Unmute once playing
             isPlaying = true;
-            updatePlayPauseButton('Pause');
+            updatePlayPauseButton('ri-pause-circle-line'); // Ensure the icon is updated to pause
         })
         .catch(error => {
             console.error('Error playing song:', error);
+            alert('Error playing song. Please try another track.');
         });
 };
 
@@ -131,13 +202,19 @@ const playSong = (songUrl) => {
 const pauseSong = () => {
     audioElement.pause();
     isPlaying = false;
-    updatePlayPauseButton('Play');
+    updatePlayPauseButton('ri-play-circle-line'); // Update to play icon
 };
 
-// Update play/pause button text
-const updatePlayPauseButton = (text) => {
-    document.getElementById('play-pause').textContent = text;
+// Update play/pause button icon
+const updatePlayPauseButton = (iconName) => {
+    const playPauseButton = document.getElementById('play-pause');
+    // Remove any existing icon classes
+    playPauseButton.classList.remove('ri-play-circle-line', 'ri-pause-circle-line');
+    // Add the new icon class
+    playPauseButton.classList.add(iconName);
 };
+
+
 
 // Play the next song
 const playNextSong = () => {
@@ -162,17 +239,24 @@ document.getElementById('next').addEventListener('click', playNextSong);
 // Handle previous button click
 document.getElementById('prev').addEventListener('click', playPreviousSong);
 
-// Update minimize and maximize button with function
-document.getElementById('minimize-maximize').addEventListener('click', () => {
+// // Update minimize and maximize button with function
+document.getElementById('maximize').addEventListener('click', () => {
     const player = document.getElementById('player');
-    const button = document.getElementById('minimize-maximize');
+    if(player.classList.contains('hidden')){
+        player.classList.remove('hidden');
+        player.classList.add('visible');
+        document.getElementById('maximize').classList.remove('visible');
+        document.getElementById('maximize').classList.add('hidden');
+    }
+})
+document.getElementById('minimize').addEventListener('click', () => {
+    const player = document.getElementById('player');
+    if (player.classList.contains('visible')) {
+        player.classList.remove('visible');
+        player.classList.add('hidden');
+        document.getElementById('maximize').classList.remove('hidden');
+        document.getElementById('maximize').classList.add('visible');
 
-    if (player.classList.contains('minimized')) {
-        player.classList.remove('minimized');
-        button.textContent = 'Minimize';
-    } else {
-        player.classList.add('minimized');
-        button.textContent = 'Maximize';
     }
 });
 
@@ -206,6 +290,15 @@ const handleArtistSearch = async () => {
             alert('No artists found');
         }
     }
+    let artistlist = document.getElementById('artistlist-cont')
+    if (artistlist.classList.contains("visible")) {
+        artistlist.classList.remove("visible");
+        artistlist.classList.add("hidden");
+    } else {
+        artistlist.classList.remove("hidden");
+        artistlist.classList.add("visible");
+        artistlist.style.width = "100%";
+    }
 };
 
 // Attach artist search function to search button or input field
@@ -215,16 +308,15 @@ document.getElementById('search').addEventListener('keypress', (e) => {
 
 document.getElementById('search-button').addEventListener('click', handleArtistSearch);
 
-// Initialize by searching for artists from Spotify
-document.addEventListener('DOMContentLoaded', () => {
-    const artistName = prompt("Enter artist name to load songs from Spotify:");
-    if (artistName) handleArtistSearch(artistName);
-});
+// // Initialize by searching for artists from Spotify
+// document.addEventListener('DOMContentLoaded', () => {
+//     const artistName = prompt("Enter artist name to load songs from Spotify:");
+//     if (artistName) handleArtistSearch(artistName);
+// });
 
 const defaultArtists = [
     { name: 'Arijit Singh', image: 'arijit.png' },
     { name: 'Swaroop Khan', image: 'Swaroop_khan.png' },
-    { name: 'Dhanda Nyoliwala', image: 'Dhanda.png' },
     { name: 'Kam Lohgarh', image: 'Kam_Lohgarh.png' },
     { name: 'Yo Yo Honey Singh', image: 'Honey.png' },
     { name: 'Karan Aujla', image: 'Karan.png' },
@@ -277,10 +369,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Function to fetch top artists dynamically
-const fetchTopArtists = async (query = 'genre:punjabi') => { // Use genres or keywords for broader search
+const fetchTopHariyanviArtists = async (query = 'genre: Hariyanvi') => { // Use genres or keywords for broader search
     try {
         const token = await getAccessToken();
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=10`, {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=18`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch artists');
+
+        const data = await response.json();
+        return data.artists.items; // Return array of artist objects
+    } catch (error) {
+        console.error('Error fetching artists:', error);
+    }
+};
+
+// Function to fetch top artists dynamically
+const fetchTopArtists = async (query = 'genre: punjabi') => { // Use genres or keywords for broader search
+    try {
+        const token = await getAccessToken();
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=20`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch artists');
+
+        const data = await response.json();
+        return data.artists.items; // Return array of artist objects
+    } catch (error) {
+        console.error('Error fetching artists:', error);
+    }
+};
+
+const fetchTopGujratiArtists = async (query = 'genre: gujrati') => { // Use genres or keywords for broader search
+    try {
+        const token = await getAccessToken();
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=7`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -298,10 +427,12 @@ const fetchTopArtists = async (query = 'genre:punjabi') => { // Use genres or ke
 // Initialize and load artists
 document.addEventListener('DOMContentLoaded', async () => {
     // Fetch additional top artists using broader criteria
-    const topArtists = await fetchTopArtists('genre:punjabi'); // Fetch top artists in the pop genre
+    const topGujratiArtists = await fetchTopArtists('genre: gujrati'); // Fetch top artists in the pop genre
+    const topHariyanviArtists = await fetchTopArtists('genre: hariyanvi'); // Fetch top artists in the pop genre
+    const topPunjabiArtists = await fetchTopArtists('genre: punjabi'); // Fetch top artists in the pop genre
 
     // Combine default artists with fetched artists
-    const combinedArtists = [...defaultArtists, ...(topArtists || [])];
+    const combinedArtists = [...defaultArtists, ...(topHariyanviArtists || []), ...(topGujratiArtists || []), ...(topPunjabiArtists || [])];
 
     // Render combined list of artists
     renderArtists(combinedArtists);
@@ -309,7 +440,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 const getSongsByArtist = async (artistName) => {
     try {
         const token = await getAccessToken();
-        const response = await fetch(`https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artistName)}&type=track&limit=10`, {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artistName)}&type=track&limit=30`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -323,6 +454,7 @@ const getSongsByArtist = async (artistName) => {
             filePath: track.preview_url || 'default-preview-url.mp3',
             coverPath: track.album.images[0]?.url || 'default-cover.jpg'
         }));
+        
 
         // Update global songs array and display
         songs = tracks;
@@ -335,5 +467,49 @@ const getSongsByArtist = async (artistName) => {
     } catch (error) {
         console.error('Error fetching songs by artist:', error);
     }
+
+
 };
 
+
+
+function toggleMenuDropdown() {
+    var sidebar = document.getElementById("sidebar"); // Use the correct ID as a string
+    if (sidebar.classList.contains("visible")) {
+        sidebar.classList.remove("visible");
+        sidebar.classList.add("hidden");
+        if (user.classList.contains('hidden')){
+            user.classList.remove('hidden');
+            user.classList.add('visible');
+        }
+    } else {
+        sidebar.classList.remove("hidden");
+        sidebar.classList.add("visible");
+        sidebar.style.width = "100%";
+        if(user.classList.contains('visible')){
+            user.classList.remove('visible');
+            user.classList.add('hidden');
+        }
+    }
+}
+
+function toggleDropdown() {
+    var content = document.getElementById("dropdown-content");
+    if (content.style.display === "block") {
+        content.style.display = "none";
+    } else {
+        content.style.display = "block";
+        content.classList.remove("hidden");
+        content.classList.add("visible");
+    }
+}
+if(menu.classList.contains("visible")){
+    menu.classList.remove("visible");
+    menu.classList.add("hidden");
+}else {
+    menu.classList.remove("hidden");
+    menu.classList.add("visible");
+}
+
+const artistProfile = document.getElementById('artist-profile');
+artistProfile.onclick = () => toggle();

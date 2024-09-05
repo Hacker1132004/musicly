@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | HireUP</title>
+    <title>Register | Musicly</title>
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
@@ -11,19 +11,19 @@
         <div id="body">
             <div id="left"> 
                 <div id="ltop">
-                    <h1>Login</h1>
-                    <p>Get started listening today.</p>
+                    <h1>Register</h1>
+                    <p style="font-size: 2vh;">Get started listening today.</p>
                     
                 </div>
                 
                 <div id="lbtm">
-                    <form action="login.php" method="get">
+                    <form action="register.php" method="post">
                         <label for="name">Name</label>
-                        <input type="text" placeholder="Enter Your Full Name">
+                        <input name="name" type="text" placeholder="Enter Your Full Name">
                         <label for="email" >Email</label>
-                        <input id="email" placeholder="hello@flowbase.co" type="mail">
+                        <input name="email" id="email" placeholder="hello@flowbase.co" type="mail">
                         <label for="password">Password</label>
-                        <input id="password" type="password" placeholder="at least 8 character">
+                        <input name="password" id="password" type="password" placeholder="at least 8 character">
                         <button type="submit">Register</button>
                     </form>
                     <p>Already have an account? <a href="index.html">Login</a></p>
@@ -46,7 +46,7 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, animi.</p>
                         </div>
                         <div id="profile">
-                            <div id="img"><img src="/profile-img.jpg" alt="img"></div>
+                            <div id="img"><img src="profile-img.JPG" alt="img"></div>
                             <div id="details">
                                 <h4>Lokendrapal Singh</h4>
                                 <h6>Developer</h6>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | HireUP</title>
+    <title>Login | Musicly</title>
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
@@ -12,17 +12,17 @@
             <div id="left"> 
                 <div id="ltop">
                     <h1>Login</h1>
-                    <p>Get started listening today.</p>
+                    <p style="font-size: 2vh;">Get started listening today.</p>
                     
                 </div>
                 
                 <div id="lbtm">
-                    <form action="login.php" method="get">
+                    <form action="login.php" method="post">
                         <label for="email" >Email</label>
-                        <input id="email" placeholder="hello@flowbase.co" type="mail">
+                        <input name="email" id="email" required placeholder="hello@flowbase.co" type="mail">
                         <label for="password">Password</label>
-                        <input id="password" type="password" placeholder="at least 8 character">
-                        <a href="#">Forgot Password? </a>
+                        <input name="password" id="password" required type="password" placeholder="at least 8 character">
+                        <a href="reset.html">Forgot Password? </a>
                         <button type="submit">Login</button>
                     </form>
                     <p>Don't have an account? <a href="register.html">Register</a></p>
@@ -45,7 +45,7 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, animi.</p>
                         </div>
                         <div id="profile">
-                            <div id="img"><img src="/profile-img.jpg" alt="img"></div>
+                            <div id="img"><img src="profile-img.JPG" alt="img"></div>
                             <div id="details">
                                 <h4>Lokendrapal Singh</h4>
                                 <h6>Developer</h6>
